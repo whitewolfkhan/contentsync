@@ -82,7 +82,16 @@ export interface PlatformKeyUpsert {
 // Backend default is now 8765 because port 8000 is reserved by Windows on this
 // dev machine (Hyper-V excluded range) and uvicorn cannot bind it. Override
 // per-environment via NEXT_PUBLIC_API_BASE_URL in frontend/.env.local.
-const API_BASE = process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:8765";
+// API base URL.
+//   - In the browser: NEXT_PUBLIC_API_BASE_URL is inlined at build time.
+//   - During SSR / server components, `process.env.NEXT_PUBLIC_*` is also
+//     available (Vercel inlines the value into the bundle), but we still
+//     prefer an explicit server-only env var so deployers don't have to
+//     remember to set the public one too.
+const API_BASE =
+  (typeof window === "undefined" && process.env.API_BASE_URL) ||
+  process.env.NEXT_PUBLIC_API_BASE_URL ||
+  "http://localhost:8000";
 
 /**
  * Build a Cookie header value from the current server-component request.

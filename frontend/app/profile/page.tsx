@@ -115,7 +115,11 @@ export default async function ProfilePage() {
 
       {loadError && (
         <div className="bg-yellow-50 border border-yellow-200 text-yellow-800 rounded-lg p-3 text-sm">
-          {loadError}
+          Couldn't load your workspace ({loadError}). Try{" "}
+          <Link href="/login?next=/profile" className="underline font-medium">
+            signing in again
+          </Link>
+          .
         </div>
       )}
 

@@ -24,8 +24,11 @@ export default async function PostsPage() {
 
       {loadError && (
         <div className="bg-yellow-50 border border-yellow-200 text-yellow-800 rounded-lg p-3 text-sm">
-          {loadError} — make sure the FastAPI server is reachable at{" "}
-          <code className="font-mono">{process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:8000"}</code>.
+          Couldn't load your posts ({loadError}). If you're signed in elsewhere,
+          <Link href="/login?next=/posts" className="ml-1 underline font-medium">
+            sign in here
+          </Link>
+          .
         </div>
       )}
 
