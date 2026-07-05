@@ -1,21 +1,18 @@
-import { redirect } from "next/navigation";
-
 import PostComposer from "@/components/PostComposer";
-import { api } from "@/lib/api";
 
 export const dynamic = "force-dynamic";
 
 /**
- * Dedicated compose page. Bounces unauthenticated visitors to /login and
- * then back here via `next` so the form is the destination, not the root.
+ * /posts/new is a thin shell that just renders the composer. The composer is
+ * already a client component and does its own auth gate (it calls api.me() in
+ * useEffect and redirects to /login?next=/posts/new when the cookie is gone).
+ *
+ * We must NOT call api.me() in this server component: the FastAPI session
+ * cookie lives on contentsync-api.onrender.com (not on the Vercel origin), so
+ * an SSR fetch always looks unauthenticated and would bounce the user back to
+ * /login even when they're signed in.
  */
-export default async function NewPostPage() {
-  try {
-    await api.me();
-  } catch {
-    redirect("/login?next=/posts/new");
-  }
-
+export default function NewPostPage() {
   return (
     <div className="space-y-4">
       <div>
