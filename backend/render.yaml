@@ -1,0 +1,16 @@
+services:
+  - type: web
+    name: contentsync-api
+    runtime: python
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: DATABASE_URL
+        sync: false
+      - key: FRONTEND_URL
+        value: https://contentsync.vercel.app
+      - key: API_BASE_URL
+        value: https://contentsync-api.onrender.com
+      - key: SCHEDULER_POLL_SECONDS
+        value: "60"

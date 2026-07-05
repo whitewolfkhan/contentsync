@@ -1,0 +1,22 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+.env
+.env.local
+.pytest_cache/
+
+# Node
+node_modules/
+.next/
+out/
+
+# Editor
+.vscode/
+.idea/
+.DS_Store
+
+# Puku assistant working file
+.puku

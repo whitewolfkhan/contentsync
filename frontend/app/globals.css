@@ -1,0 +1,109 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html,
+body,
+#__next {
+  height: 100%;
+}
+
+/* Animated gradient background — used by the .app-bg wrapper in the root layout. */
+.app-bg {
+  position: relative;
+  background:
+    radial-gradient(1200px 600px at 10% -10%, #c7d2fe 0%, transparent 60%),
+    radial-gradient(900px 500px at 110% 10%, #fbcfe8 0%, transparent 55%),
+    radial-gradient(700px 600px at 50% 120%, #a7f3d0 0%, transparent 55%),
+    linear-gradient(180deg, #f8fafc 0%, #eef2ff 100%);
+  background-attachment: fixed;
+}
+
+/* Floating colored blobs that drift behind the content. */
+.blob {
+  position: fixed;
+  z-index: 0;
+  border-radius: 9999px;
+  filter: blur(60px);
+  opacity: 0.45;
+  pointer-events: none;
+  will-change: transform;
+}
+.blob-1 {
+  width: 420px;
+  height: 420px;
+  left: -120px;
+  top: -80px;
+  background: radial-gradient(circle, #818cf8 0%, transparent 70%);
+  animation: float-a 18s ease-in-out infinite alternate;
+}
+.blob-2 {
+  width: 360px;
+  height: 360px;
+  right: -100px;
+  top: 30%;
+  background: radial-gradient(circle, #f472b6 0%, transparent 70%);
+  animation: float-b 22s ease-in-out infinite alternate;
+}
+.blob-3 {
+  width: 480px;
+  height: 480px;
+  left: 30%;
+  bottom: -160px;
+  background: radial-gradient(circle, #34d399 0%, transparent 70%);
+  animation: float-c 26s ease-in-out infinite alternate;
+}
+
+@keyframes float-a {
+  0% { transform: translate3d(0, 0, 0) scale(1); }
+  100% { transform: translate3d(40px, 60px, 0) scale(1.08); }
+}
+@keyframes float-b {
+  0% { transform: translate3d(0, 0, 0) scale(1); }
+  100% { transform: translate3d(-60px, 40px, 0) scale(1.12); }
+}
+@keyframes float-c {
+  0% { transform: translate3d(0, 0, 0) scale(1); }
+  100% { transform: translate3d(30px, -50px, 0) scale(1.05); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .blob { animation: none; }
+}
+
+/* Glassmorphism card used by login / signup / password pages. */
+.glass-card {
+  background: rgba(255, 255, 255, 0.72);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  box-shadow:
+    0 10px 30px -10px rgba(15, 23, 42, 0.18),
+    0 1px 0 rgba(255, 255, 255, 0.6) inset;
+}
+
+/* Branded focus ring shared by form inputs. */
+.input {
+  @apply mt-1 w-full rounded-lg border border-gray-300 bg-white/80 px-3 py-2 text-gray-900
+         shadow-sm outline-none transition;
+}
+.input:focus {
+  border-color: #6366f1;
+  box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.18);
+}
+
+/* Subtle fade-in for the auth cards. */
+.fade-in {
+  animation: fade-in 320ms ease-out both;
+}
+@keyframes fade-in {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Markdown editor styling, kept from the original. */
+.md-editor-wrapper .w-md-editor {
+  border-radius: 0.75rem;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+  border: 1px solid #e5e7eb;
+}
