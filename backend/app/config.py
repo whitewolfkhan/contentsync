@@ -18,7 +18,7 @@ class Settings(BaseSettings):
     )
 
     database_url: str = (
-        "postgresql+psycopg2://postgres:postgres@localhost:5432/contentsync"
+        "postgresql+psycopg://postgres:postgres@localhost:5432/contentsync"
     )
     api_base_url: str = "http://localhost:8000"
     frontend_url: str = "http://localhost:3000"
