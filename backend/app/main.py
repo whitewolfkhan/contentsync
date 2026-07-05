@@ -19,16 +19,29 @@ app = FastAPI(
     version="1.1.0",
 )
 
-# Dev CORS: allow any localhost / 127.0.0.1 origin on any port (Next.js, Vite,
-# Vercel previews all bind to either spelling depending on the host). In
-# production this should be tightened to FRONTEND_URL only.
-_dev_origins = [
-    "http://localhost:3000",
-    "http://127.0.0.1:3000",
-    "http://localhost:3001",
-    "http://127.0.0.1:3001",
-    settings.frontend_url,
-]
+# CORS allowlist:
+#   - localhost / 127.0.0.1 on common Next.js dev ports
+#   - settings.frontend_url  (production frontend)
+#   - settings.allowed_origins  (comma-separated extras for previews, etc.)
+# The list is deduped and blanks are filtered out.
+_dev_origins = list(dict.fromkeys(
+    o.strip()
+    for o in (
+        [
+            "http://localhost:3000",
+            "http://127.0.0.1:3000",
+            "http://localhost:3001",
+            "http://127.0.0.1:3001",
+            settings.frontend_url,
+        ]
+        + [
+            extra
+            for extra in settings.allowed_origins.split(",")
+            if extra.strip()
+        ]
+    )
+    if o and o.strip()
+))
 
 app.add_middleware(
     CORSMiddleware,

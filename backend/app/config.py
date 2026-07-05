@@ -22,6 +22,9 @@ class Settings(BaseSettings):
     )
     api_base_url: str = "http://localhost:8000"
     frontend_url: str = "http://localhost:3000"
+    # Comma-separated extra origins to allow through CORS (e.g. a Vercel
+    # preview URL like `https://contentsync-delta.vercel.app`). Empty in dev.
+    allowed_origins: str = ""
     scheduler_poll_seconds: int = 60
 
     # Auth / crypto secrets. Optional in dev (auto-generated), required in prod.
